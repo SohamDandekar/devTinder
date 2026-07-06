@@ -11,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const onSubmitHandler = async () => {
     try{
@@ -20,8 +21,8 @@ const Login = () => {
 
       dispatch(addUser(res.data));
       navigate("/");
-    }catch(err){
-      console.error(err);
+    }catch(err: any){
+      setError(err?.response?.data || "Something went wrong!");
     }
   }
 
@@ -29,7 +30,7 @@ const Login = () => {
     <div className="flex justify-center">
     <div className="card card-border bg-base-300 w-96">
       <div className="card-body">
-        <h2 className="card-title justify-center">Login</h2>
+        <h2 className="card-title justify-center text-xl">Login</h2>
         <div>
           <fieldset className="fieldset my-2">
             <legend className="fieldset-legend">Email</legend>
@@ -40,8 +41,9 @@ const Login = () => {
             <input type="text" className="input" value={password} onChange={(e) => setPassword(e.target.value)} />
           </fieldset>
         </div>
+        <p className="text-red-500">{error}</p>
         <div className="card-actions justify-center">
-          <button className="btn btn-primary my-2" onClick={onSubmitHandler}>Submit</button>
+          <button className="btn btn-primary my-2" onClick={onSubmitHandler}>Login</button>
         </div>
       </div>
     </div>
