@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { addFeed } from "../utils/feedSlice";
-import UserCard from "./UserCArd";
+import UserCard from "./UserCard";
 
 
 const Feed = () => {
