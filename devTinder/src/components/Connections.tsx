@@ -2,7 +2,7 @@ import axios from "axios"
 import { BASE_URL } from "../utils/constants"
 import { useDispatch, useSelector } from "react-redux"
 import { addConnections } from "../utils/connectionsSlice";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 
 
 const Connections = () => {
@@ -41,9 +41,9 @@ const Connections = () => {
         <h1 className="text-2xl font-bold text-white">Connections</h1>
         {connections.map((connection:any) => {
 
-        const {firstName, lastName, photoUrl, age, gender, about} = connection;
+        const {_id, firstName, lastName, photoUrl, age, gender, about} = connection;
         return( 
-        <div className="card card-side bg-base-300 shadow-sm">
+        <div key={_id} className="card card-side bg-base-300 shadow-sm w-1/2 m-4 p-4 mx-auto">
             <figure className="rounded-full">
                 <img
                 src={photoUrl}
