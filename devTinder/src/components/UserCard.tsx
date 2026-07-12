@@ -1,4 +1,8 @@
+import axios from "axios";
 import React from "react";
+import { BASE_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { removeUserFromFeed } from "../utils/feedSlice";
 
 interface User {
     firstName: string;
@@ -7,6 +11,7 @@ interface User {
     age?: number;
     gender?: string;
     about?: string;
+    _id?: string;
 }
 
 interface Props {
@@ -15,7 +20,18 @@ interface Props {
 
 const UserCard: React.FC<Props> = ({ user }) => {
 
-    const {firstName, lastName, photoUrl, age, gender, about} = user;
+    const dispatch = useDispatch();
+    const {_id, firstName, lastName, photoUrl, age, gender, about} = user;
+
+    const handleFeedCard = async (status:string, id?:string) => {
+        if (!id) return;
+        try{
+            await axios.post(BASE_URL + "/request/send/" + status + "/" + id, {}, {withCredentials: true});
+            dispatch(removeUserFromFeed(id));
+        }catch(err){
+            console.error(err);
+        }
+    }
 
   return (
         <div className="card bg-base-300 w-96 shadow-sm">
@@ -29,8 +45,8 @@ const UserCard: React.FC<Props> = ({ user }) => {
                 {age && gender && <p>{age + ", " + gender}</p>}
                 <p>{about}</p>
                 <div className="card-actions justify-center my-4">
-                    <button className="btn btn-primary">Ignore</button>
-                    <button className="btn btn-secondary">Interested</button>
+                    <button className="btn btn-primary" onClick={() => _id && handleFeedCard("ignored", _id)}>Ignore</button>
+                    <button className="btn btn-secondary" onClick={() => _id && handleFeedCard("interested", _id)}>Interested</button>
                 </div>
             </div>
         </div>

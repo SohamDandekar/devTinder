@@ -34,12 +34,20 @@ const Feed = () => {
     }
   },[]);
 
+  if(!feed) return;
+
+  if(feed.length === 0) {
+    return( 
+        <div className="text-center font-bold text-xl my-10">
+            No Potential Connections Found!
+        </div>
+      );
+    }
+
   return (
-    feed && (
     <div className="flex justify-center my-10">
       <UserCardAny user={feed[0]}/>
     </div>
-    )
   );
 }
 
